@@ -1,2 +1,11 @@
 title: Faasten
 theme: minima
+plugins:
+  - jekyll-titles-from-headings
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+header_pages:
+  - tutorial.md
+  - documentation/index.md
+  - deployment.md
