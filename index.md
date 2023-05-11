@@ -38,5 +38,8 @@ and accessing the network) are gates and services.
 *Functions make CloudCalls to call into the cloud kernel, removing ad-hoc security checks in non-Faasten
 FaaS applications*
 
+![architecture](assets/images/detailed-architecture.png#center)
+*Detailed Faasten Architecture*
+
 (Note that the cloud kernel simply offers invocation functionality and does not
 consider scheduling-related security concerns.)
