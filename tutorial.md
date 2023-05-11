@@ -2,9 +2,64 @@
 title: Tutorial
 layout: page
 ---
-# Write Faasten Functions
-Let's use `gen-thumb` in Python as an example as we consider that `gen-thumb` is very representative. We expect
-typical FaaS functions to have the structure of download-compute-upload.
+In this tutorial, you will:
+1. get to know how Faasten manages security privileges,
+2. get to know Faasten's system-enforced data security,
+2. get to know how one can easily add a functionality without breaking the security.
+
+# Prerequisites
+* [Rust](https://www.rust-lang.org/tools/install)
+
+# Get Ready
+Download the tutorial code.
+```sh
+git clone git@github.com:faasten/example-apps
+cd example-apps/tutorial
+```
+Install Faasten's command line client `fstn` on your local machine
+```sh
+git clone git@github.com:faasten/fstn
+cd fstn
+git checkout tutorial
+cargo install --path .
+```
+Faasten log-in
+```sh
+# follow instructions
+fstn login
+```
+
+# Privilege Management: Install a Function on Faasten
+We have already registered a thumbnail generation function at `:home:<T,yuetan>:thumbnail`.
+Now, install the function to your home directory.
+```sh
+./install_thumbnail.sh
+```
+Check your home directory. The installment should create `~:thumbnail`.
+```sh
+fstn list-dir '~'
+```
+Test out the installment.
+```sh
+./test_thumbnail.sh
+```
+
+(*Faasten tightly couples a file-system with the computation substrate and data are named by colon-separated
+paths. In the example above, `:` is the root directory. `home` is a faceted directory. `<T,yuetan>` names a facet of `home`.
+A facet is a directory named by its security policy. In this example, the facet can be read by anyone but can only
+be written by `yuetan`.*
+
+*Furthermore, `~` is the shorthand of one's home directory `:home:<USER,USER>`, readable and writable
+only by USER.*)
+
+# System-Enforced Data Security: Try a Different Output Path
+
+# Write New Functions that Add Functionalities
+By design, in Faasten, one can easily extend an application without breaking the security.
+In this section, you will write a new function `detect-face` that add the face detection functionality.
+
+## Learn to Write Faasten Functions
+First, let's dive into the source of `thumbnail` to see how a faasten looks like.
 
 ### Part 0: create `workload.py`
 Assume we are in `gen-thumb` directory, our code goes into a single file `workload.py`.
@@ -64,20 +119,6 @@ def handle(event, cloudcall):
    return {}
 ```
 
-## Package `gen-thumb` Locally
-Currently, Faasten relies on developers to package their functions into a Linux file-system
-(we have used Ext2 and SquashFS).
+## Complete `face-detect/workload.py`
 
-### Package Dependencies
-Docker is used to package native dependencies. A language's package installer is used to package
-language dependencies (pip for Python). Lastly, a file-system formatter is required (mkfs or gensquashfs).
-
-### Dependencies
-TBD
-
-## Register `gen-thumb`  using fstn
-TBD
-
-## Invoke `gen-thumb` using fstn
-### Pre-upload a photo
-TBD
+## Try out `face-detect`
