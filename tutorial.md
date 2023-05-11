@@ -168,5 +168,13 @@ def handle(event, cloudcall):
 ```
 
 ### Task: complete `detect-face/workload.py`
-`detect-face` has the same structure as `thumbnail`---download the input, compute, and upload the result.
+1. `detect-face` would have the same structure as `thumbnail`---download the input, compute, and upload the result.
 Just like `thumbnail`, the system will automatically confines an `detect-face` instance.
+2. Packaging `detect-face` requires make, Docker and squashfs-tools.
+```sh
+# in example-apps/tutorial
+make -C detect-face
+gensquashfs --pack-dir detect-face/out detect-face.img
+```
+Alternatively, we include a compressed detec-face.base.img.tgz of format ext2 on Git LFS.
+One can download, uncompress, and mount it and then overwrite workload.py with the finished workload.py.
